@@ -130,7 +130,7 @@ python src/monitoring.py
 
 *   📄 **[Architecture Hybride & Choix Techniques](docs/01-%20Choix%20des%20services%20AWS%20adaptés.md)**
 *   📄 **[Analyse FinOps & Compatibilité SI](docs/02-%20Evaluation%20de%20compatibilité%20SI.md)**
-*   🎥 **Démo Vidéo :** *[Lien Youtube à venir]*
+*   🎥 **Démo Vidéo :** [Voir la démonstration sur YouTube](https://www.youtube.com/watch?v=Os1Gh2lNP7o)
 
 ---
 

@@ -42,7 +42,7 @@ services:
   # --- Service 3 : PRODUCER ---
   producer:
     build: .                           
-    container_name: python-producer
+    container_name: producer
     command: python src/producer.py    
     environment:
       KAFKA_BROKER: redpanda:9092
@@ -57,7 +57,7 @@ services:
   # --- Service 4 : SPARK ETL ---
   spark-job:
     build: .                          
-    container_name: spark-etl
+    container_name: spark
     ports:
       - 4040:4040
     command: python src/stream_job.py  
