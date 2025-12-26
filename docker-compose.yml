@@ -1,0 +1,75 @@
+services:
+  # --- Service 1 : REDPANDA
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:latest
+    container_name: redpanda
+    command:
+      - redpanda start
+      - --smp 1
+      - --memory 1G
+      - --reserve-memory 0M
+      - --overprovisioned
+      - --node-id 0
+      - --check=false
+      - --kafka-addr PLAIN://0.0.0.0:9092,OUTSIDE://0.0.0.0:9094
+      - --advertise-kafka-addr PLAIN://redpanda:9092,OUTSIDE://localhost:9094
+      - --pandaproxy-addr PLAIN://0.0.0.0:8082,OUTSIDE://0.0.0.0:8083
+      - --advertise-pandaproxy-addr PLAIN://redpanda:8082,OUTSIDE://localhost:8083
+    ports:
+      - 8081:8081
+      - 8082:8082
+      - 9094:9094
+      - 9644:9644
+    volumes:
+      - redpanda-data:/var/lib/redpanda/data
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -q 'Healthy'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- Service 2 : REDPANDA CONSOLE 
+  console:
+    image: docker.redpanda.com/redpandadata/console:latest
+    container_name: redpanda-console
+    ports:
+      - 8080:8080
+    environment:
+      KAFKA_BROKERS: redpanda:9092
+    depends_on:
+      - redpanda
+
+  # --- Service 3 : PRODUCER ---
+  producer:
+    build: .                           
+    container_name: python-producer
+    command: python src/producer.py    
+    environment:
+      KAFKA_BROKER: redpanda:9092
+      TOPIC_NAME: ${TOPIC_NAME}
+      CONTAINER_DATA_DIR: /app/data
+    volumes:
+      - ${HOST_DATA_DIR}:/app/data
+    depends_on:
+      redpanda:
+        condition: service_healthy    
+
+  # --- Service 4 : SPARK ETL ---
+  spark-job:
+    build: .                          
+    container_name: spark-etl
+    ports:
+      - 4040:4040
+    command: python src/stream_job.py  
+    environment:
+      KAFKA_BROKER: ${KAFKA_BROKER}
+      CONTAINER_DATA_DIR: /app/data
+    volumes:
+      - ${HOST_DATA_DIR}:/app/data
+    depends_on:
+      redpanda:
+        condition: service_healthy
+    restart: on-failure:5
+
+volumes:
+  redpanda-data:

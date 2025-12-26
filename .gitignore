@@ -1,0 +1,35 @@
+# --- PYTHON ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- ENVIRONNEMENTS VIRTUELS & GESTIONNAIRES ---
+.venv/
+.poetry/
+dist/
+build/
+*.egg-info/
+
+# --- IDE & OS (Fichiers système inutiles) ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- DOCKER & ENVIRONNEMENT ---
+.env
+# On garde .env.example (on va le créer juste après)
+
+# --- DONNÉES & SORTIES
+data_output/
+assets/checkpoints/
+temp/
+
+# --- LOGS & AUDIT ---
+*.log
+audit_producer.json
+restart.ps1
+
+# --- FICHIERS DE TRAVAIL ---
+docs/sandbox/
+sandbox/

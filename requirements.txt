@@ -1,0 +1,5 @@
+faker==39.0.0 ; python_version >= "3.10"
+kafka-python-ng==2.2.3 ; python_version >= "3.10"
+py4j==0.10.9.7 ; python_version >= "3.10"
+pyspark==3.5.3 ; python_version >= "3.10"
+tzdata==2025.3 ; python_version >= "3.10"

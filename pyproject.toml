@@ -1,0 +1,30 @@
+[project]
+name = "indutechdata"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Abdulkadir GUVEN",email = "abguven@yahoo.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "kafka-python-ng (>=2.2.3,<3.0.0)",
+    "faker (>=39.0.0,<40.0.0)",
+    "pyspark (==3.5.3)",
+]
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+notebook = "^7.4.7"
+pandas = "^2.3.3"
+pyarrow = "^22.0.0"
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
